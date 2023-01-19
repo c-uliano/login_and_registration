@@ -22,9 +22,20 @@ class User:
     @classmethod
     def get_by_email(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        result = connectToMySQL("user_login_registration").query_db(query)
+        result = connectToMySQL("user_login_registration").query_db(query, data)
 
         return cls(result[0]) if result else None
+# ? --------------------------------------
+
+
+
+# ? --------------------------------------
+    # CREATE new user, add form data to database
+    @classmethod
+    def save(cls, data):
+        query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (%(fname)s, %(lname)s, %(email)s, %(password)s, NOW(), NOW());"
+
+        return connectToMySQL("user_login_registration").query_db(query, data)
 # ? --------------------------------------
 
 
@@ -63,17 +74,6 @@ class User:
 
 
         return is_valid
-# ? --------------------------------------
-
-
-
-# ? --------------------------------------
-    # CREATE new user, add form data to database
-    @classmethod
-    def save(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (%(fname)s, %(lname)s, %(email)s, %(password)s, NOW(), NOW());"
-
-        return connectToMySQL("user_login_registration").query_db(query, data)
 # ? --------------------------------------
 
 

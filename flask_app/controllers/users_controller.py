@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request, flash, session
 from flask_app.models import user_model
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -37,9 +37,42 @@ def register():
 
 
 # ? --------------------------------------
+# redirect successful registration to success page
 @app.route('/success') 
 def to_success_page():
+
     return render_template("success.html") 
+# ? --------------------------------------
+
+
+
+# ? --------------------------------------
+# READ user by email, redirect to success page
+@app.route('/login', methods=['POST']) 
+def login():
+    data = { 
+        "email" : request.form["email"] 
+    }
+
+    user = user_model.User.get_by_email(data)
+
+    if not user or not bcrypt.check_password_hash(user.password, request.form['password']): 
+        flash("Invalid Credentials", "login")
+        return redirect('/')
+
+    session['user_id'] = user.id
+
+    return redirect("/success") 
+# ? --------------------------------------
+
+
+
+# ? --------------------------------------
+# logout, redirect to homepage
+@app.route('/logout') 
+def logout():
+    session.clear()
+    return redirect("/")
 # ? --------------------------------------
 
 
