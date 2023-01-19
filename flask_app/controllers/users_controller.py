@@ -41,6 +41,12 @@ def register():
 @app.route('/success') 
 def to_success_page():
 
+    if 'user_id' not in session:
+        return redirect('/')
+
+    # if not session['user_id']:
+    #     return redirect('/')
+
     return render_template("success.html") 
 # ? --------------------------------------
 
@@ -60,6 +66,8 @@ def login():
         flash("Invalid Credentials", "login")
         return redirect('/')
 
+    # to determine if someone is logged in
+    # * confirmed, this key in session[] can be anything. Literally tested session['anything'], worked fine
     session['user_id'] = user.id
 
     return redirect("/success") 
