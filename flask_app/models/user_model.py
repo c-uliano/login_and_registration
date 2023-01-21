@@ -16,7 +16,6 @@ class User:
 
 
 
-
 # ? --------------------------------------
 # READ user by email address
     @classmethod
@@ -99,10 +98,10 @@ class User:
     # READ one user, show on frontend
     # @classmethod
     # def get_one(cls, data):
-    #     query  = "SELECT * FROM users WHERE id = %(id)s;" # * id, matching the table column
-    #     result = connectToMySQL('users_schema').query_db(query, data)
+    #     query  = "SELECT * FROM users WHERE id = %(id)s;" 
+    #     result = connectToMySQL('user_login_registration').query_db(query, data)
 
-    #     return cls(result[0]) # ! is this making an object out of the first result from the database? I think it is.
+    #     return cls(result[0]) 
 # ? --------------------------------------
 
 

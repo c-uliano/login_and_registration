@@ -13,9 +13,8 @@ def index():
 
 
 
-
 # ? --------------------------------------
-# CREATE, validate, hash
+# CREATE, validate, hash, redirect to success page
 @app.route('/register', methods=['POST']) 
 def register():
 
@@ -32,22 +31,6 @@ def register():
     user_model.User.save(data)
 
     return redirect('/success') 
-# ? --------------------------------------
-
-
-
-# ? --------------------------------------
-# redirect successful registration to success page
-@app.route('/success') 
-def to_success_page():
-
-    if 'user_id' not in session:
-        return redirect('/')
-
-    # if not session['user_id']:
-    #     return redirect('/')
-
-    return render_template("success.html") 
 # ? --------------------------------------
 
 
@@ -71,6 +54,23 @@ def login():
     session['user_id'] = user.id
 
     return redirect("/success") 
+# ? --------------------------------------
+
+
+
+# ? --------------------------------------
+# redirect successful registration to success page
+@app.route('/success') 
+def to_success_page():
+
+    # ! this does not consistently work, no clue why.
+    if 'user_id' not in session:
+        return redirect('/')
+
+    # if not session['user_id']:
+    #     return redirect('/')
+
+    return render_template("success.html") 
 # ? --------------------------------------
 
 
